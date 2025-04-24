@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    
+    <style>
+        body{
+            background-color: #1E1E1E; /* VS Code dark background */
+            color: #ffffff; /* Bright text */
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            text-align:center;
+            margin:0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 75vh; /* Make the body take full viewport height */
+
+        }
+        h1{
+            font-weight:bold;
+        }
+        form input[type="text"] {
+            background-color: #1E1E1E;
+            color: #ffffff;
+            border: 1px solid #555;
+            padding: 5px;
+            font-family: Monaco, monospace;
+            text-align: center;
+        }
+        form input[type="submit"]:{
+            background: linear-gradient(145deg,rgba(71, 66, 75, 0.6),rgba(71, 66, 75, 0.6)); /* rich purple gradient */
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-family: Monaco, monospace;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(71, 66, 75, 0.6);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+
+        form input[type="submit"]:hover {
+            background-color:rgb(95, 106, 114);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(71, 66, 75, 0.6);  
+        }
+        
+        form input[type="submit"]:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(71, 66, 75, 0.6);
+        }
+
+        .history{
+            margin-top:20px;
+        }
+          
+        .wordle-box{
+            display: inline-block;
+            background-color: #252526; /* Slightly lighter than body */
+            border: 2px solid #3C3C3C;
+            padding: 30px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 300px;
+            max-width: 90%;
+            transition: height 0.3s ease;
+        }
+        
+        a{
+            color: white;
+            text-decoration: underline;
+        }
+
+        .instructions {
+            font-family: Monaco, monospace;
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Web</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    
+</head>
+<body>
+    <div class="wordle-box">
+    <h1>Wordle</h1>
+
+    <p class="instructions">
+        Guess the 5-letter word in 6 tries. <br>
+        - Green = correct letter, correct place. <br>
+        - Orange = correct letter, wrong place. <br>
+        - Gray = not in the word at all.<br>
+                    😎😎😎😎
+    </p>
+    
+    {% if message %}
+        <p><strong>{{ message }}</strong></p>
+        <a href="{{ url_for('index') }}">Play Again</a>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red">{{ error }}</p>
+    {% endif %}
+
+    {% if not message %}
+    <form method="POST">
+        <input type="text" name="guess" maxlength="5" required>
+        <input type="submit" value="Confirm">
+    </form>
+    {% endif %}
+
+    <div class="history">
+        {% for item in history %}
+            <p>{{ item|safe }}</p>
+        {% endfor %}
+    </div>
+    </div>
+</body>
+</html>
